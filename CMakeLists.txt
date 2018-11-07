@@ -129,6 +129,10 @@ if(MSVC)
       "Set to OFF|ON (default is OFF) to control parallel build of POCO with MSVC" OFF)
 endif()
 
+if(WIN32)
+    option(POCO_DISABLE_UNWINDOWS "Disable Poco's helpful hacking of windows.h" OFF)
+endif()
+
 # Uncomment from next two lines to force static or dynamic library, default is autodetection
 if(POCO_STATIC)
     set(LIB_MODE_DEFINITIONS -DPOCO_STATIC -DPOCO_NO_AUTOMATIC_LIBS)
@@ -154,6 +158,10 @@ if(POCO_UNBUNDLED)
   message(STATUS "Using external sqlite, zlib, pcre, expat, ...")
 else()
   message(STATUS "Using internal sqlite, zlib, pcre, expat, ...")
+endif()
+
+if(POCO_DISABLE_UNWINDOWS)
+  add_definitions(-DPOCO_NO_UNWINDOWS)
 endif()
 
 include(DefinePlatformSpecifc)
